@@ -1,0 +1,33 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Sample dataset with some None values
+data = {
+    'YearsExperience': [1.1, 1.5, 2.0, 3.0, 4.0, None, 5.0, 6.0, 7.0, 8.0],
+    'Salary': [40000, 45000, 50000, 60000, 65000, None, 70000, 80000, 85000, 90000]
+}
+
+# Create DataFrame
+df = pd.DataFrame(data)
+
+# Fill None values with the mean of their column
+df = df.fillna(df.mean())
+
+# Define features and target variable
+X = df[['YearsExperience']]
+y = df['Salary']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Create and train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# User input for prediction
+years_experience = float(input("Enter years of experience: "))
+predicted_salary = model.predict([[years_experience]])
+
+print("Predicted Salary:", predicted_salary[0])
+
