@@ -1,0 +1,41 @@
+# KNN Classification: Height (Short vs Tall)
+
+# Import libraries
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Step 1: Dataset
+# Heights (in cm)
+X = [[150],[155],[160], [165],[170],[175],[180], [185]]
+
+# Labels: 0 = Short, 1 = Tall
+y = [0, 0, 0, 0, 1, 1, 1, 1]
+
+# Step 2: Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=50
+)
+
+# Step 3: Create KNN model (K = 3)
+knn_model = KNeighborsClassifier(n_neighbors=3)
+
+# Step 4: Train the model
+knn_model.fit(X_train, y_train)
+
+# Step 5: Make predictions on test data
+y_pred = knn_model.predict(X_test)
+
+# Step 6: Evaluate model accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Model Accuracy:", accuracy)
+
+# Step 7: Predict a new height
+new_height = 165
+prediction = knn_model.predict([[new_height]])[0]
+
+# Convert numeric output to label
+if prediction == 1:
+    print(f"Height {new_height} cm is classified as: Tall")
+else:
+    print(f"Height {new_height} cm is classified as: Short")
